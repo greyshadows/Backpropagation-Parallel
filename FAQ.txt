@@ -1,0 +1,52 @@
+
+FAQ:
+
+1. Parfor and Parpool what are they ? What Improvements have been achieved ?
+
+	Parfor:
+		parfor divides the loop iterations into groups so that each worker executes some portion of the total number of iterations. parfor-loops are also useful when you have loop iterations that take a long time to execute, because the workers can execute iterations simultaneously. This is visualised with seeing output values in a small loop which will not be continous. This execute loop iterations in parallel.
+
+	Parpool:
+		 A parallel pool describes this collection of workers, such as when referring to the pool size. The size is dependent on the cluster which we use and is inturn machine or OS dependent. If a parallel pool is not running, parfor creates a pool using your default cluster profile, if your parallel preferences are set accordingly. This create parallel pool on cluster
+
+	Over all running time of the program here was found out to be high in training procedure. The reasons might be the following.
+	
+	1. Parallel overhead. There is overhead in calling parfor instead of for. If function evaluations are fast, this overhead could become appreciable. In particular, solving a problem in parallel can be slower than solving the problem serially.
+
+	2. No nested parfor loops.
+	
+	3. When executing serially, parfor loops run slower than for loops. Therefore, for best performance, ensure that only your outermost parallel loop calls parfor.
+
+	4. Passing parameters in functions. Parameters are automatically passed to worker machines during the execution of parallel computations. If there are a large number of parameters, or they take a large amount of memory, passing them may slow the execution of your computation.
+
+	‘Source for the reasons : Google Search, Stack over flow and Documentation of the above.’
+		
+
+2. How inbuilt Parallel works and is different from the above and why ?
+	
+	Matrix multiplication in matlab uses LAPACK is the modern replacement for LINPACK and EISPACK. It is a large, multi-author, Fortran library for numerical linear algebra. LAPACK was originally intended for use on supercomputers and other high-	end machines. It uses block algorithms, which operate on several columns of a matrix at a time which is the reason it is fast. This is a also intended to exploit the level 3 BLAS (Basic Linear Algebra systems)-a set of specifications for Fortran subprograms that do various types of matrix multiplication and the solution of triangular systems with multiple right-hand sides.
+
+3. What other methods which can be used here instead of the above both ?
+
+	GPUArray’s but we did not have Nvidia Graphics or Tesla Processors to support it in Matlab. This version uses ‘MAGMA’ which develops a Linear Algebra library for multicore+GPU systems.
+
+
+4. What are other possible methods we have tried for the same algorithm ?
+
+	Parallel Python Library - This was developed in 2005 - Not working because of some update issues. The reason for not submitting the python code.
+
+	Multithreading in python - This also turned out to be a failure with synchronization issues which were time consuming to debug.
+
+
+5. What other good things out there which might work ?
+
+	OpenMP - We did not prefer it as it is not available with python or matlab. Only available with C++.
+	
+	CUDA   - This was our initial plan to use but well, it is supported with only B Nvidia Graphic Card machines but both of our machines are equipped with Intel Graphic cards.
+
+        Theano - Theano is a Deep Learning library. we should have changed the whole algorithm and moved to CNN’s instead of B-ANN’s. 
+
+
+	
+
+Thanks ! :)
